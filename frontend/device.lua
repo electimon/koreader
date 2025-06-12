@@ -37,6 +37,11 @@ local function probeDevice()
         return require("device/cervantes/device")
     end
 
+    local ios_test_stat = lfs.attributes("/System/Library/CoreServices/SpringBoard.app/SpringBoard")
+    if ios_test_stat then
+        return require("device/ios/device")
+    end
+
     -- add new ports here:
     --
     -- if --[[ implement a proper test instead --]] false then
