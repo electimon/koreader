@@ -111,7 +111,7 @@ jobs:
 
       - name: Restore build directory
         id: build-restore
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: build
           key: ${{ env.CACHE_EPOCH }}-${{ runner.os }}-${{ runner.arch }}-build-${{ hashFiles('cache-key') }}
@@ -119,7 +119,7 @@ jobs:
       - name: Restore build cache
         id: ccache-restore
         if: steps.build-restore.outputs.cache-hit != 'true'
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: /Users/runner/Library/Caches/ccache
           key: ${{ env.CACHE_EPOCH }}-${{ runner.os }}-${{ runner.arch }}-ccache-${{ hashFiles('cache-key') }}
@@ -169,14 +169,14 @@ jobs:
           ccache --show-stats --verbose
 
       - name: Save build cache
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         if: steps.build-restore.outputs.cache-hit != 'true' && steps.ccache-restore.outputs.cache-hit != 'true'
         with:
           path: /Users/runner/Library/Caches/ccache
           key: ${{ steps.ccache-restore.outputs.cache-primary-key }}
 
       - name: Save build directory
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         if: steps.build-restore.outputs.cache-hit != 'true'
         with:
           path: build
